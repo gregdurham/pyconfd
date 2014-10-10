@@ -1,0 +1,2 @@
+include LICENSE VERSION CHANGELOG.md README.md
+include src/schemas/*

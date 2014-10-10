@@ -1,0 +1,40 @@
+---
+type: map
+mapping:
+  "vars":
+    type: map
+    mapping:
+      "env":
+        type: seq
+        sequence:
+          - type: map
+            mapping:
+              regex;(.*):
+                type: str
+
+      "etcd":
+        type: seq
+        sequence:
+          - type: map
+            mapping:
+              regex;(.*):
+                type: str
+  "templates":
+    type: seq
+    sequence:
+      - type: map
+        mapping:
+          regex;(.*):
+            type: map
+            mapping:
+              "source":
+                type: str
+                required: true
+              "dest":
+                type: str
+                required: true
+              "vars":
+                type: map
+                mapping:
+                  regex;(.*):
+                    type: str

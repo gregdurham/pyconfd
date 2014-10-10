@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+from optparse import OptionParser
+from pyconfd import Config
+from pyconfd import yaml_to_dict, build_template, write_template
+from pyconfd import EnvBackend, EtcdBackend
+
+
+parser = OptionParser()
+parser.add_option("--template-dir", dest="template_dir", default="/etc/py-confd/templates", help="Path to the templates directory")
+parser.add_option("--config-file", dest="config_file", default="/etc/py-confd/conf/default.yml", help="Path to the templates directory")
+parser.add_option("--etcd-ip", dest="etcd_ip", default="127.0.0.1", help="IP address of etcd server default is 127.0.0.1")
+parser.add_option("--etcd-port", dest="etcd_port", default="4001", help="Port of etcd server default is 4001")
+parser.add_option("--noop", action="store_true", dest="noop", default=False, help="Run without modifying anything")
+
+(options, args) = parser.parse_args()
+try:
+    config = Config(yaml_to_dict(options.config_file))
+    config.validate()
+    conf_vars = {'env': EnvBackend(), 'etcd': EtcdBackend(options.etcd_ip, options.etcd_port)}
+    template_vars = {}
+
+    vars_section = config.get_vars()
+    for backend in vars_section.keys():
+        conf_vars[backend].get_values(vars_section[backend], template_vars)
+
+    templates_section = config.get_templates()
+    for template in templates_section:
+        dst, content = build_template(template, template_vars, options.template_dir)
+        if options.noop:
+            print content
+        else:
+            write_template(dst, content)
+
+except:
+    print sys.exc_info()[1]
+    sys.exit(1)
+
