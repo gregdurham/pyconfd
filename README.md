@@ -25,7 +25,7 @@ templates:
 There are two main sections, `vars` and `templates`.
 
 Under `vars` is `env` and `etcd`. This describes where the variables will come from. 
-In this case we are looking for the environment varialbe `NAME` and assigning it to 
+In this case we are looking for the environment variable `NAME` and assigning it to 
 `name`, we are then using this to populate a template where we want to use the `name` 
 in the string. I.e. name being `host01` would create `/servers/host01/cluster`. 
 We would then contact etcd with this path, and assign the variable to `cluster`. 
@@ -43,7 +43,7 @@ A sample template.txt.j2:
 ```
 
 If run from the source project:
-`NAME=host01 python confd-runner.py --config-file default.yaml --template-dir /etc/py-confd/templates/`
+`NAME=host01 pyconfd --config-file default.yaml --template-dir /etc/py-confd/templates/`
 
 Possible options:
 ```
