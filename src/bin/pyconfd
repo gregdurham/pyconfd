@@ -9,8 +9,8 @@ from pyconfd import EnvBackend, EtcdBackend
 
 
 parser = OptionParser()
-parser.add_option("--template-dir", dest="template_dir", default="/etc/py-confd/templates", help="Path to the templates directory")
-parser.add_option("--config-file", dest="config_file", default="/etc/py-confd/conf/default.yml", help="Path to the templates directory")
+parser.add_option("--template-dir", dest="template_dir", default="/etc/pyconfd/templates", help="Path to the templates directory")
+parser.add_option("--config-file", dest="config_file", default="/etc/pyconfd/conf/default.yml", help="Path to the templates directory")
 parser.add_option("--etcd-ip", dest="etcd_ip", default="127.0.0.1", help="IP address of etcd server default is 127.0.0.1")
 parser.add_option("--etcd-port", dest="etcd_port", default="4001", help="Port of etcd server default is 4001")
 parser.add_option("--noop", action="store_true", dest="noop", default=False, help="Run without modifying anything")

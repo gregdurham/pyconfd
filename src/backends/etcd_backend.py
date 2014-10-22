@@ -7,7 +7,7 @@ class EtcdBackend(object):
         self.port = port
 
     def get_values(self, etcd_vars, var):
-        client = etcd.Client()
+        client = etcd.Client(host=self.host, port=self.port)
     
         for e in etcd_vars:
             try:
