@@ -1,8 +1,10 @@
 import os
 from jinja2 import Environment, FileSystemLoader, TemplateNotFound
+import template_helpers
 
 def build_template(template, vars_dict, template_dir):
     env = Environment(loader=FileSystemLoader(template_dir))
+    env.globals['pyconfd'] = template_helpers
     populated_vars_dict = {}
     for t in template.keys():
         src = template[t].get('source')

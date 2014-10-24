@@ -14,6 +14,7 @@ parser.add_option("--config-file", dest="config_file", default="/etc/pyconfd/con
 parser.add_option("--etcd-ip", dest="etcd_ip", default="127.0.0.1", help="IP address of etcd server default is 127.0.0.1")
 parser.add_option("--etcd-port", type="int", dest="etcd_port", default=4001, help="Port of etcd server default is 4001")
 parser.add_option("--noop", action="store_true", dest="noop", default=False, help="Run without modifying anything")
+parser.add_option("--debug", action="store_true", dest="debug", default=False, help="Debug mode")
 
 (options, args) = parser.parse_args()
 try:
@@ -25,6 +26,9 @@ try:
     vars_section = config.get_vars()
     for backend in vars_section.keys():
         conf_vars[backend].get_values(vars_section[backend], template_vars)
+
+    if options.debug:
+        print template_vars
 
     templates_section = config.get_templates()
     for template in templates_section:
